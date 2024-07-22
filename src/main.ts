@@ -83,6 +83,7 @@ function createPrompt(file: File, chunk: Chunk, prDetails: PRDetails): string {
 - Provide the response in following JSON format:  {"reviews": [{"lineNumber":  <line_number>, "reviewComment": "<review comment>"}]}
 - Do not give positive comments or compliments.
 - Provide comments and suggestions ONLY if there is something to improve, otherwise "reviews" should be an empty array.
+- Possible improvements may ONLY include criticisms regarding security or architecture.
 - Write the comment in GitHub Markdown format.
 - Use the given description only for the overall context and only comment the code.
 - IMPORTANT: NEVER suggest adding comments to the code.
@@ -116,7 +117,7 @@ async function getAIResponse(prompt: string): Promise<Array<{
 }> | null> {
   const queryConfig = {
     model: OPENAI_API_MODEL,
-    temperature: 0,
+    temperature: 0.2,
     max_tokens: 700,
     top_p: 1,
     frequency_penalty: 0,
