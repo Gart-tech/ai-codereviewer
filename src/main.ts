@@ -24,14 +24,24 @@ interface PRDetails {
 }
 
 async function getPRDetails(): Promise<PRDetails> {
+  console.log("Starting to get PR details");
+
+  const eventPath = process.env.GITHUB_EVENT_PATH || "";
+  console.log(`Reading event data from: ${eventPath}`);
+
   const { repository, number } = JSON.parse(
-    readFileSync(process.env.GITHUB_EVENT_PATH || "", "utf8")
+    readFileSync(eventPath, "utf8")
   );
+  console.log(`Repository: ${repository.name}, Owner: ${repository.owner.login}, PR Number: ${number}`);
+
   const prResponse = await octokit.pulls.get({
     owner: repository.owner.login,
     repo: repository.name,
     pull_number: number,
   });
+
+  console.log(`PR Title: ${prResponse.data.title}, PR Description: ${prResponse.data.body}`);
+
   return {
     owner: repository.owner.login,
     repo: repository.name,
