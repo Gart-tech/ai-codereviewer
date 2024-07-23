@@ -94,13 +94,13 @@ function createPrompt(file: File, chunk: Chunk, prDetails: PRDetails): string {
     prDetails.description + '\n' +
     '---\n\n' +
     'Git diff to review:\n\n' +
-    '```diff\n' +
+    'diff\n' +
     chunk.content + '\n' +
     chunk.changes
       // @ts-expect-error - ln and ln2 exists where needed
       .map((c) => (c.ln ? c.ln : c.ln2) + ' ' + c.content)
       .join('\n') +
-    '\n```';
+    '\n';
 }
 
 async function getAIResponse(prompt: string): Promise<Array<{
