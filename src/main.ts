@@ -64,11 +64,8 @@ async function analyzeCode(
   const comments: Array<{ body: string; path: string; line: number }> = [];
 
   for (const file of parsedDiff) {
-    if (file.to === "/dev/null") continue; // Ignore deleted files
+    if (file.to === "/dev/null" || file.chunks.length === 0) continue; // Ignore deleted and blank files
     for (const chunk of file.chunks) {
-      // Skip empty chunks
-      if (chunk.changes.length === 0) continue;
-
       const prompt = createPrompt(file, chunk, prDetails);
       const aiResponse = await getAIResponse(prompt);
       if (aiResponse) {
