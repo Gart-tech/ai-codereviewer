@@ -54,7 +54,11 @@ async function getDiff(
     mediaType: { format: "diff" },
   });
   // @ts-expect-error - response.data is a string
-  return response.data;
+  const diff = response.data;
+  if (!diff.trim()) {
+    return null;
+  }
+  return diff;
 }
 
 async function analyzeCode(
@@ -261,13 +265,16 @@ async function main() {
     });
 
     diff = String(response.data);
+    if (!diff.trim()) {
+      diff = null;
+    }
   } else {
     console.log("Unsupported event:", process.env.GITHUB_EVENT_NAME);
     return;
   }
 
   if (!diff) {
-    console.log("No diff found");
+    console.log("No diff found or diff is empty");
     return;
   }
 
