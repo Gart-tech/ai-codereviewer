@@ -199,6 +199,7 @@ function createComment(
     if (!file.to) {
       return [];
     }
+    console.log(`Creating comment for file: ${file.to}, line: ${aiResponse.lineNumber}`);
     return {
       body: aiResponse.reviewComment,
       path: file.to,
@@ -213,11 +214,21 @@ async function createReviewComment(
   pull_number: number,
   comments: Array<{ body: string; path: string; line: number }>
 ): Promise<void> {
+
+  console.log("Review comments to be posted:", comments);
+
+  const validComments = comments.filter(comment => comment.path && comment.line > 0);
+
+  if (validComments.length === 0) {
+    console.log("No valid comments to post");
+    return;
+  }
+
   await octokit.pulls.createReview({
     owner,
     repo,
     pull_number,
-    comments,
+    comments: validComments,
     event: "COMMENT",
   });
 }
