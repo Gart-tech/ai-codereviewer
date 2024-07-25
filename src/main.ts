@@ -100,6 +100,8 @@ Here are your instructions regarding the format and the style of the review:
 - Suggest a fix in a reviewComment if applicable by using a \`\`\`suggestion\`\`\` code block (with proper whitespace indentation).
 - Use the given description only for overall context and focus only on the code.
 - IMPORTANT: NEVER suggest adding comments to the code.
+- Do not review commented sections of code or already corrected errors in the code. Review only the latest updates.
+- Leave comments only on things that could potentially cause an error in the code or that do not match the code style.
 
 Review the following code diff in the file "${file.to}" and take the pull request title and description into account when writing the response.
 
