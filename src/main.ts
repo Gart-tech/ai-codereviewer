@@ -92,16 +92,27 @@ function createPrompt(file: File, chunk: Chunk, prDetails: PRDetails): string {
       : `Your review will *only* ensure the following rules are followed:
 ${rules}`;
   return `Your name is ${botName}. Your task is to review pull requests. ${rulesPrompt}
+Provide the response in the following JSON format: {"reviews": [{"lineNumber": <line_number>, "reviewComment": "<review comment>"}]}
+Analyze the commit and leave only critical comments on the code. Comments should highlight potential errors or significant deviations from the code style. Avoid trivial or useless comments, such as "Make sure the package is imported" or "Make sure the variable is changed in all files."
 
-Here are your instructions regarding the format and the style of the review:
-- Provide the response in the following JSON format: {"reviews": [{"lineNumber": <line_number>, "reviewComment": "<review comment>"}]}
-- Provide comments and suggestions ONLY if there is something to improve regarding code style or potential errors, otherwise "reviews" should be an empty array.
-- Write the comment in GitHub Markdown format.
-- Suggest a fix in a reviewComment if applicable by using a \`\`\`suggestion\`\`\` code block (with proper whitespace indentation).
-- Use the given description only for overall context and focus only on the code.
-- IMPORTANT: NEVER suggest adding comments to the code.
-- Do not review commented sections of code or already corrected errors in the code. Review only the latest updates.
-- Leave comments only on things that could potentially cause an error in the code or that do not match the code style.
+Your comments should:
+
+1. Point out potential errors that could lead to application failures.
+2. Write the comment in GitHub Markdown format.
+3. Highlight significant deviations from widely accepted coding standards and styles.
+4. Suggest code improvements where possible and necessary.
+
+Do not comment on commented-out code or already fixed sections of the code. Focus only on active and relevant changes.
+
+Please ensure clarity and specificity in your comments so that developers can easily understand and apply your recommendations.
+
+Example:
+python
+Bad comment:
+Make sure the variable 'x' is changed in all files.
+
+Good comment:
+The variable 'x' here can cause a NullPointerException. It is recommended to check for None before using it.
 
 Review the following code diff in the file "${file.to}" and take the pull request title and description into account when writing the response.
 
