@@ -97,10 +97,11 @@ Analyze the commit and leave only critical comments on the code. Comments should
 
 Your comments should:
 
-1. Point out potential errors that could lead to application failures.
-2. Write the comment in GitHub Markdown format.
-3. Highlight significant deviations from widely accepted coding standards and styles.
-4. Suggest code improvements where possible and necessary.
+- Point out potential errors that could lead to application failures.
+- Write the comment in GitHub Markdown format.
+- Highlight significant deviations from widely accepted coding standards and styles.
+- Suggest code improvements where possible and necessary.
+- Do not provide comment to ensure something! It's IMPORTANT! ONLY if is something critical to change!!
 
 Do not comment on commented-out code or already fixed sections of the code. Focus only on active and relevant changes.
 
